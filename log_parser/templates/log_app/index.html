@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+  <center>
+  <h2>Введите email</h2>
+  <form action="." method="get">
+      <input name="query" type="text">
+      <input type="submit" value="Поиск">
+  </form>
+
+  {% if not logs %}
+    <br>Информации не найдено
+  {% endif %}
+  {% if len_response %}
+    <br>Получено более 100 записей. Выведены первые 100.<br>
+  {% endif %}
+  </center>
+  {% for log in logs %}
+  <ul>
+    <li>
+      Дата/время: {{ log.created|date:'Y-m-d H:i:s' }}
+    </li>
+    {% if log.address %}
+      <li>
+        Адрес: {{ log.address }}
+      </li>
+    {% endif %}
+  </ul>
+  <p>{{ log.log_str }}</p>    
+  {% if not forloop.last %}<hr>{% endif %}
+{% endfor %} 
+{% endblock %}
