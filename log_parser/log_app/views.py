@@ -12,7 +12,7 @@ def index(request):
     query, response, response_lst = None, None, []
     if 'query' in request.GET: 
         form = SearchForm(request.GET) 
-        if form.is_valid(): 
+        if form.is_valid():
             query = form.cleaned_data['query']
     if query:
         response_lst.extend(
@@ -29,7 +29,7 @@ def index(request):
     context = {
         'title': title,
         'text': 'Просмотр логов',
-        'logs': response[:settings.RESPONSE_LIMIT],
-        'len_response': len(response) > settings.RESPONSE_LIMIT
+        'logs': response[:settings.RESPONSE_LIMIT] if response else None,
+        'len_response': len(response) > settings.RESPONSE_LIMIT if response else None
     }
     return render(request, template, context)
